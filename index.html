@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>키오스크 훈련 - 장애 아동을 위한 교육</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- 메인 메뉴 -->
+        <div id="main-menu" class="screen active">
+            <div class="header">
+                <h1>키오스크 훈련</h1>
+                <p>실제 키오스크를 연습해보세요!</p>
+            </div>
+            
+            <div class="menu-grid">
+                <div class="menu-item" data-scenario="cafe">
+                    <div class="menu-icon">☕</div>
+                    <h3>카페</h3>
+                    <p>음료 주문하기</p>
+                </div>
+                
+                <div class="menu-item" data-scenario="mart">
+                    <div class="menu-icon">🛒</div>
+                    <h3>마트</h3>
+                    <p>물건 구매하기</p>
+                </div>
+                
+                <div class="menu-item" data-scenario="restaurant">
+                    <div class="menu-icon">🍜</div>
+                    <h3>분식점</h3>
+                    <p>음식 주문하기</p>
+                </div>
+                
+                <div class="menu-item" data-scenario="movie">
+                    <div class="menu-icon">🎬</div>
+                    <h3>영화관</h3>
+                    <p>영화 예매하기</p>
+                </div>
+                
+                <div class="menu-item" data-scenario="subway">
+                    <div class="menu-icon">🚇</div>
+                    <h3>지하철</h3>
+                    <p>교통카드 충전하기</p>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <button id="sound-toggle" class="sound-btn">
+                    🔊 소리 켜기
+                </button>
+            </div>
+        </div>
+
+        <!-- 키오스크 화면 -->
+        <div id="kiosk-screen" class="screen">
+            <div class="kiosk-header">
+                <button id="back-btn" class="back-btn">← 돌아가기</button>
+                <h2 id="scenario-title">카페</h2>
+                <div class="progress-bar">
+                    <div id="progress-fill"></div>
+                </div>
+            </div>
+            
+            <div class="kiosk-content">
+                <div class="menu-section">
+                    <h3 id="menu-title">메뉴 선택</h3>
+                    <div id="menu-items" class="menu-items">
+                        <!-- 메뉴 아이템들이 동적으로 생성됩니다 -->
+                    </div>
+                </div>
+                
+                <div class="order-section">
+                    <h3>주문 내역</h3>
+                    <div id="order-list" class="order-list">
+                        <p class="empty-order">주문한 상품이 없습니다</p>
+                    </div>
+                    
+                    <div class="total-section">
+                        <div class="total-amount">
+                            <span>총 금액:</span>
+                            <span id="total-price">0원</span>
+                        </div>
+                        
+                        <div class="payment-buttons">
+                            <button id="pay-cash" class="pay-btn cash-btn">
+                                💵 현금 결제
+                            </button>
+                            <button id="pay-card" class="pay-btn card-btn">
+                                💳 카드 결제
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 결제 진행 화면 -->
+        <div id="payment-screen" class="screen">
+            <div class="payment-content">
+                <div class="payment-animation">
+                    <div class="loading-spinner"></div>
+                    <h3 id="payment-message">결제 중입니다...</h3>
+                    <div class="progress-dots">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 완료 화면 -->
+        <div id="completion-screen" class="screen">
+            <div class="completion-content">
+                <div class="success-icon">✅</div>
+                <h2>주문 완료!</h2>
+                <p id="completion-message">주문이 성공적으로 완료되었습니다.</p>
+                <div class="completion-buttons">
+                    <button id="new-order" class="btn primary">새로운 주문</button>
+                    <button id="back-to-menu" class="btn secondary">메인으로</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 오디오 요소들 -->
+    <audio id="button-sound" src="sounds/button-click.mp3" preload="auto"></audio>
+    <audio id="payment-sound" src="sounds/payment.mp3" preload="auto"></audio>
+    <audio id="success-sound" src="sounds/success.mp3" preload="auto"></audio>
+    <audio id="error-sound" src="sounds/error.mp3" preload="auto"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html> 
