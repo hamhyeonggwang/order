@@ -218,18 +218,41 @@ function updateOrderDisplay() {
         return;
     }
     
-    elements.orderList.innerHTML = currentOrder.map(item => `
+    elements.orderList.innerHTML = currentOrder.map((item, index) => `
         <div class="order-item">
             <span class="order-item-name">${item.icon} ${item.name} x${item.quantity}</span>
             <span class="order-item-price">${item.totalPrice.toLocaleString()}원</span>
+            <button class="remove-item-btn" data-index="${index}">❌</button>
         </div>
     `).join('');
+    
+    // 삭제 버튼 이벤트 리스너 추가
+    document.querySelectorAll('.remove-item-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const index = parseInt(e.target.dataset.index);
+            removeFromOrder(index);
+        });
+    });
+}
+
+// 주문에서 아이템 삭제
+function removeFromOrder(index) {
+    playSound('button');
+    currentOrder.splice(index, 1);
+    updateOrderDisplay();
+    updateTotalPrice();
+    updateProgress();
 }
 
 // 총 금액 업데이트
 function updateTotalPrice() {
     const total = currentOrder.reduce((sum, item) => sum + item.totalPrice, 0);
     elements.totalPrice.textContent = `${total.toLocaleString()}원`;
+    
+    // 주문이 있을 때만 결제 버튼 활성화
+    const hasOrder = currentOrder.length > 0;
+    buttons.payCash.disabled = !hasOrder;
+    buttons.payCard.disabled = !hasOrder;
 }
 
 // 진행률 업데이트
@@ -261,6 +284,10 @@ function initializeScenario(scenario) {
     updateOrderDisplay();
     updateTotalPrice();
     
+    // 결제 버튼 초기 상태 설정
+    buttons.payCash.disabled = true;
+    buttons.payCard.disabled = true;
+    
     showScreen('kioskScreen');
 }
 
@@ -276,7 +303,7 @@ function processPayment(paymentType) {
     
     const messages = [
         '결제 정보를 확인하고 있습니다...',
-        '카드 정보를 읽는 중입니다...',
+        paymentType === 'cash' ? '모바일 쿠폰을 스캔하고 있습니다...' : '카드 정보를 읽는 중입니다...',
         '결제 승인을 요청하고 있습니다...',
         '결제가 완료되었습니다!'
     ];
@@ -300,9 +327,11 @@ function processPayment(paymentType) {
 
 // 완료 화면 표시
 function showCompletionScreen() {
+    console.log('완료 화면 표시 함수 호출됨');
     const data = scenarioData[currentScenario];
     elements.completionMessage.textContent = data.completionMessage;
     showScreen('completionScreen');
+    console.log('완료 화면 표시 완료');
 }
 
 // 이벤트 리스너 설정
@@ -335,11 +364,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 완료 화면 버튼들
     buttons.newOrder.addEventListener('click', () => {
+        console.log('새로운 주문 버튼 클릭됨');
         playSound('button');
         initializeScenario(currentScenario);
     });
     
     buttons.backToMenu.addEventListener('click', () => {
+        console.log('메인으로 버튼 클릭됨');
         playSound('button');
         showScreen('mainMenu');
     });
@@ -350,6 +381,14 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.soundToggle.textContent = soundEnabled ? '🔊 소리 켜기' : '🔇 소리 끄기';
         playSound('button');
     });
+    
+    // 심화 훈련 버튼
+    const advancedTrainingBtn = document.querySelector('.advanced-training-btn');
+    if (advancedTrainingBtn) {
+        advancedTrainingBtn.addEventListener('click', () => {
+            playSound('button');
+        });
+    }
     
     // 키보드 접근성
     document.addEventListener('keydown', (e) => {

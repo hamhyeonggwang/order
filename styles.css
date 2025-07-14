@@ -129,6 +129,35 @@ body {
     transform: scale(1.05);
 }
 
+.advanced-training-btn {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    border: 2px solid white;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 15px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.advanced-training-btn:hover {
+    background: linear-gradient(135deg, #ff5252, #d63031);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+    text-decoration: none;
+    color: white;
+}
+
+.advanced-training-btn:active {
+    transform: scale(1.02);
+}
+
 /* 키오스크 화면 */
 #kiosk-screen {
     background: #f8f9fa;
@@ -283,6 +312,31 @@ body {
     margin-bottom: 10px;
 }
 
+.remove-item-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.remove-item-btn:hover {
+    background: #c82333;
+    transform: scale(1.1);
+}
+
+.remove-item-btn:active {
+    transform: scale(0.95);
+}
+
 .order-item-name {
     font-weight: 500;
     color: #333;
@@ -328,6 +382,14 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     color: white;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.pay-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 .cash-btn {
